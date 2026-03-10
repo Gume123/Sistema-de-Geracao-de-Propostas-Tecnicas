@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="https://sohelices.com.br/wp-content/uploads/2026/03/logo-sohelices-favicon.png"
+    />
+
+    <title>Gerador Só Hélices | Propostas</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background: #f1f5f9;
+        margin: 0;
+        padding: 40px 20px;
+      }
+
+      .container {
+        max-width: 1000px;
+        margin: auto;
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 40px;
+      }
+
+      .header h1 {
+        font-size: 38px;
+        margin-bottom: 6px;
+      }
+
+      .header p {
+        color: #6b7280;
+      }
+
+      .section {
+        background: white;
+        border-radius: 14px;
+        padding: 30px;
+        margin-bottom: 25px;
+        border: 1px solid #e5e7eb;
+      }
+
+      .section h2 {
+        font-size: 20px;
+        border-left: 4px solid #ff008c;
+        padding-left: 10px;
+        margin-bottom: 20px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 20px;
+      }
+
+      .field {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .field label {
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: #6b7280;
+        margin-bottom: 6px;
+      }
+
+      .field input {
+        padding: 12px 14px;
+        border-radius: 8px;
+        border: 1px solid #d1d5db;
+        background: #f9fafb;
+        font-size: 14px;
+      }
+
+      .field input:focus {
+        outline: none;
+        border-color: #ff008c;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+      }
+
+      button {
+        width: 100%;
+        margin-top: 20px;
+        padding: 18px;
+        border: none;
+        background: #ff008c;
+        color: white;
+        font-weight: 700;
+        font-size: 18px;
+        border-radius: 12px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background: #fff;
+        color: #ff008c;
+        border: 1px solid #ff008c;
+        box-shadow: 0 0 0 3px rgba(201, 18, 103, 0.15);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>Só Hélices</h1>
+        <p>Sistema de Geração de Propostas Técnicas</p>
+      </div>
+
+      <form id="propostaForm">
+        <div class="section">
+          <h2>Identificação da Proposta</h2>
+
+          <div class="grid">
+            <div class="field">
+              <label>Nº da Proposta</label>
+              <input type="text" id="proposta" placeholder="15000" />
+            </div>
+
+            <div class="field">
+              <label>Data de Emissão</label>
+              <input type="text" id="data" placeholder="09/03/2026" />
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <h2>📄 Selecione o Modelo de Proposta</h2>
+
+          <div class="grid">
+            <div class="field">
+              <label>Template Disponível</label>
+
+              <select id="selectTemplate">
+                <option value="">Carregando modelos...</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <h2>Detalhes Técnicos</h2>
+
+          <div class="grid">
+            <div class="field">
+              <label>Aleta (mm)</label>
+              <input type="text" id="aleta" placeholder="300" />
+            </div>
+
+            <div class="field">
+              <label>Ø da Aleta (mm)</label>
+              <input type="text" id="diametro_aleta" placeholder="600" />
+            </div>
+
+            <div class="field">
+              <label>Ø do Corpo (mm)</label>
+              <input type="text" id="diametro_corpo" placeholder="650" />
+            </div>
+
+            <div class="field">
+              <label>Espaçamento</label>
+              <input type="text" id="espacamento" placeholder="30" />
+            </div>
+
+            <div class="field">
+              <label>Aço Inox (AISI)</label>
+              <input type="text" id="aisi" placeholder="316" />
+            </div>
+
+            <div class="field">
+              <label>Espessura</label>
+              <input type="text" id="espessura" placeholder="4" />
+            </div>
+
+            <div class="field">
+              <label>Furo Central (mm)</label>
+              <input type="text" id="furo" placeholder="8" />
+            </div>
+
+            <div class="field">
+              <label>Haste</label>
+              <input type="text" id="haste" placeholder="Haste Inclusa" />
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <h2>Comercial e Logística</h2>
+
+          <div class="grid">
+            <div class="field">
+              <label>Preço Unitário</label>
+              <input type="text" id="preco_unitario" placeholder="500,00" />
+            </div>
+
+            <div class="field">
+              <label>Preço do Lote</label>
+              <input type="text" id="preco_lote" placeholder="2000,00" />
+            </div>
+
+            <div class="field">
+              <label>Frete PAC</label>
+              <input type="text" id="frete_pac" placeholder="45,00" />
+            </div>
+
+            <div class="field">
+              <label>Frete SEDEX</label>
+              <input type="text" id="frete_sedex" placeholder="60,00" />
+            </div>
+
+            <div class="field">
+              <label>Condição de Envio</label>
+              <input type="text" id="condiçao_envio" placeholder="Imediato" />
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <h2>Responsável pela Venda</h2>
+
+          <div class="grid">
+            <div class="field">
+              <label>Nome do Vendedor</label>
+              <input
+                type="text"
+                id="nome_vendedor"
+                placeholder="Bia Mãe de todos"
+              />
+            </div>
+
+            <div class="field">
+              <label>E-mail de Contato</label>
+              <input
+                type="email"
+                id="email_vendedor"
+                placeholder="vendemuito@sohelices.com.br"
+              />
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" id="btnGerar">
+          Gerar Apresentação PowerPoint
+        </button>
+      </form>
+    </div>
+
+    <script>
+      // Carrega templates disponíveis do backend
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        window.location.href = "/login.html";
+      }
+
+      window.addEventListener("DOMContentLoaded", async () => {
+        const select = document.getElementById("selectTemplate");
+
+        try {
+          const response = await fetch("http://127.0.0.1:8000/templates", {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("token"),
+            },
+          });
+
+          const templates = await response.json();
+
+          select.innerHTML = "";
+
+          const nomesTemplates = {
+            "template_ANC-G.pptx": "ANC-G",
+            "template_ANC-N.pptx": "ANC-N",
+            "template_anc-u.pptx": "ANC-U",
+            "template_ANC-T.pptx": "ANC-T",
+            "template_ARA-S.pptx": "ARA-S",
+            "template_Blend-Mix.pptx": "Blend-Mix",
+            "template_Centrifugal.pptx": "Centrifugal",
+            "template_Defloculadora.pptx": "Defloculadora",
+            "template_Helicoidal-S.pptx": "Helicoidal-S",
+            "template_Naval-N.pptx": "Naval-N",
+            "template_Pitchblade.pptx": "Pitchblade",
+            "template_Cowles.pptx": "Disco Cowles",
+          };
+
+          templates.forEach((nome) => {
+            const option = document.createElement("option");
+
+            option.value = nome;
+
+            option.innerText =
+              nomesTemplates[nome] || nome.replace(".pptx", "");
+
+            select.appendChild(option);
+          });
+        } catch (err) {
+          select.innerHTML = "<option>Erro ao carregar modelos</option>";
+        }
+      });
+
+      document
+        .getElementById("propostaForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const btn = document.getElementById("btnGerar");
+
+          btn.innerText = "Gerando Arquivo...";
+          btn.disabled = true;
+
+          const campos = [
+            "proposta",
+            "aleta",
+            "diametro_aleta",
+            "espacamento",
+            "diametro_corpo",
+            "aisi",
+            "espessura",
+            "furo",
+            "haste",
+            "preco_unitario",
+            "preco_lote",
+            "frete_pac",
+            "frete_sedex",
+            "condiçao_envio",
+            "data",
+            "nome_vendedor",
+            "email_vendedor",
+          ];
+
+          const dados = {};
+
+          campos.forEach((id) => {
+            const el = document.getElementById(id);
+            dados[id] = el.value || el.placeholder || "";
+          });
+
+          try {
+            const templateEscolhido =
+              document.getElementById("selectTemplate").value;
+
+            if (!templateEscolhido) {
+              alert("Selecione um modelo de proposta.");
+              btn.disabled = false;
+              btn.innerText = "Gerar Apresentação PowerPoint";
+              return;
+            }
+
+            const response = await fetch(
+              `http://127.0.0.1:8000/gerar-proposta?template_nome=${templateEscolhido}`,
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: "Bearer " + localStorage.getItem("token"),
+                },
+                body: JSON.stringify(dados),
+              },
+            );
+
+            if (response.ok) {
+              const blob = await response.blob();
+              const url = window.URL.createObjectURL(blob);
+
+              const a = document.createElement("a");
+              a.href = url;
+              a.download = `Proposta_SoHelices_${dados.proposta}.pptx`;
+
+              document.body.appendChild(a);
+              a.click();
+              a.remove();
+            } else {
+              alert("Erro ao processar o arquivo.");
+            }
+          } catch (error) {
+            alert("Erro de conexão com o servidor.");
+          }
+
+          btn.innerText = "Gerar Apresentação PowerPoint";
+          btn.disabled = false;
+        });
+    </script>
+  </body>
+</html>
