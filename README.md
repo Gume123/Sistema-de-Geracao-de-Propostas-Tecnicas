@@ -131,7 +131,7 @@ gerador-propostas/
 ## 1️⃣ Clonar o repositório
 
 ```bash
-git clone https://github.com/seu-usuario/gerador-propostas.git
+git clone https://github.com/Gume123/Sistema-de-Geracao-de-Propostas-Tecnicas
 ```
 
 ```bash
