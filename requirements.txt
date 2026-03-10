@@ -1,0 +1,7 @@
+Instalar dependências:
+python -m pip install fastapi uvicorn python-pptx pydantic python-jose passlib[bcrypt] python-multipart
+
+
+Iniciar Backend:
+python -m uvicorn main:app --reload 
+
