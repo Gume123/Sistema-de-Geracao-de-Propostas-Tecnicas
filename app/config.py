@@ -1,6 +1,11 @@
-SECRET_KEY = "chave_super_secreta_mude_em_producao"
-ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 60
+from dotenv import load_dotenv
+import os
 
-USUARIO = "admin"
-SENHA = "123456"
+load_dotenv()
+
+SECRET_KEY = os.getenv("SECRET_KEY")
+ALGORITHM = os.getenv("ALGORITHM")
+ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES"))
+
+USUARIO = os.getenv("USUARIO")
+SENHA = os.getenv("SENHA")

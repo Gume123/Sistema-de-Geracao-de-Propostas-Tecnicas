@@ -40,7 +40,6 @@ async def listar_templates(user: str = Depends(usuario_logado)):
 
     return arquivos
 
-
 @app.post("/gerar-proposta")
 async def gerar_proposta(
     dados: PropostaData,

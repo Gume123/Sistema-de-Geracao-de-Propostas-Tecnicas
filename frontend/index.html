@@ -62,6 +62,11 @@
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
         gap: 20px;
+        border-radius: 15px;
+      }
+      #selectTemplate {
+        border-radius: 8px;
+        padding: 5px;
       }
 
       .field {
@@ -127,12 +132,12 @@
           <div class="grid">
             <div class="field">
               <label>Nº da Proposta</label>
-              <input type="text" id="proposta" placeholder="15000" />
+              <input type="text" id="proposta" placeholder="15.000" />
             </div>
 
             <div class="field">
-              <label>Data de Emissão</label>
-              <input type="text" id="data" placeholder="09/03/2026" />
+              <label>Data de Emissão </label>
+              <input type="text" id="data" placeholder="09 de março de 2026" />
             </div>
           </div>
         </div>
@@ -161,17 +166,17 @@
             </div>
 
             <div class="field">
-              <label>Ø da Aleta (mm)</label>
+              <label>Diâmetro da Aleta (mm)</label>
               <input type="text" id="diametro_aleta" placeholder="600" />
             </div>
 
             <div class="field">
-              <label>Ø do Corpo (mm)</label>
+              <label>Diâmetro do Corpo (mm)</label>
               <input type="text" id="diametro_corpo" placeholder="650" />
             </div>
 
             <div class="field">
-              <label>Espaçamento</label>
+              <label>Espaçamento (mm)</label>
               <input type="text" id="espacamento" placeholder="30" />
             </div>
 
@@ -181,7 +186,7 @@
             </div>
 
             <div class="field">
-              <label>Espessura</label>
+              <label>Espessura (mm)</label>
               <input type="text" id="espessura" placeholder="4" />
             </div>
 
@@ -223,7 +228,11 @@
 
             <div class="field">
               <label>Condição de Envio</label>
-              <input type="text" id="condiçao_envio" placeholder="Imediato" />
+              <input
+                type="text"
+                id="condiçao_envio"
+                placeholder="Pronta-Entrega"
+              />
             </div>
           </div>
         </div>
@@ -237,7 +246,7 @@
               <input
                 type="text"
                 id="nome_vendedor"
-                placeholder="Bia Mãe de todos"
+                placeholder="Beatriz Matos"
               />
             </div>
 
@@ -246,7 +255,7 @@
               <input
                 type="email"
                 id="email_vendedor"
-                placeholder="vendemuito@sohelices.com.br"
+                placeholder="vendas@sohelices.com.br"
               />
             </div>
           </div>
@@ -344,7 +353,7 @@
 
           campos.forEach((id) => {
             const el = document.getElementById(id);
-            dados[id] = el.value || el.placeholder || "";
+            dados[id] = el.value || "-";
           });
 
           try {
