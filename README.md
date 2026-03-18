@@ -19,11 +19,11 @@ Este projeto foi criado para **uso interno da Só Hélices**, com o objetivo de 
 
 ### Tela de login
 
-<img src="https://sohelices.com.br/wp-content/uploads/2026/03/Captura-de-tela-2026-03-10-135619.png" width="500">
+<img src="docs/login.png" width="500">
 
 ### Gerador de proposta
 
-<img src="https://sohelices.com.br/wp-content/uploads/2026/03/Captura-de-tela-2026-03-10-135655.png" width="700">
+<img src="docs/interface.png" width="700">
 
 ---
 
@@ -120,6 +120,7 @@ gerador-propostas/
 │   ├── login.png
 │   └── interface.png
 │
+├── run.py
 ├── requirements.txt
 └── README.md
 ```
@@ -131,7 +132,7 @@ gerador-propostas/
 ## 1️⃣ Clonar o repositório
 
 ```bash
-git clone https://github.com/Gume123/Sistema-de-Geracao-de-Propostas-Tecnicas
+git clone https://github.com/seu-usuario/gerador-propostas.git
 ```
 
 ```bash
@@ -157,7 +158,7 @@ venv\Scripts\activate
 ## 3️⃣ Instalar dependências
 
 ```bash
-pip install fastapi uvicorn python-pptx pydantic python-jose passlib[bcrypt] python-multipart
+pip install -r requirements.txt
 ```
 
 ---
