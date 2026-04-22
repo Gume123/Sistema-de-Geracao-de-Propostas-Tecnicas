@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Novo Usuário - Só Hélices</title>
+
+    <link
+      rel="icon"
+      type="image/png"
+      href="https://sohelices.com.br/wp-content/uploads/2026/03/logo-sohelices-favicon.png"
+    />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .box {
+        background: white;
+        padding: 40px;
+        border-radius: 14px;
+        width: 340px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+      }
+
+      h2 {
+        text-align: center;
+        margin-bottom: 25px;
+        color: #333;
+        font-weight: 600;
+        font-size: 22px;
+      }
+
+      input, select {
+        width: 100%;
+        padding: 13px;
+        margin-bottom: 16px;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        font-size: 14px;
+        transition: all 0.2s;
+      }
+
+      input:focus, select:focus {
+        outline: none;
+        border-color: #ff008c;
+        box-shadow: 0 0 0 3px rgba(255, 0, 140, 0.1);
+      }
+
+      button.primary {
+        width: 100%;
+        padding: 13px;
+        background: #ff008c;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+        margin-bottom: 10px;
+      }
+
+      button.primary:hover {
+        background: #e6007e;
+        transform: translateY(-1px);
+        box-shadow: 0 6px 14px rgba(255, 0, 140, 0.25);
+      }
+      
+      button.secondary {
+        width: 100%;
+        padding: 13px;
+        background: #f1f5f9;
+        color: #333;
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      button.secondary:hover {
+        background: #e2e8f0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="box">
+      <h2>Cadastrar Vendedor</h2>
+
+      <input id="usuario" placeholder="Nome de Usuário" />
+      <input id="senha" type="password" placeholder="Senha" />
+      <select id="role">
+        <option value="vendedor">Vendedor</option>
+        <option value="admin">Administrador</option>
+      </select>
+
+      <button class="primary" onclick="criarUsuario()">Criar Conta</button>
+      <button class="secondary" onclick="window.location.href='index.html'">Voltar</button>
+
+      <div id="msg" style="text-align:center; font-size: 14px; margin-top: 15px;"></div>
+    </div>
+
+    <script>
+      const token = localStorage.getItem("token");
+      if (!token) {
+        window.location.href = "login.html";
+      }
+
+      async function criarUsuario() {
+        const usuario = document.getElementById("usuario").value;
+        const senha = document.getElementById("senha").value;
+        const role = document.getElementById("role").value;
+        const msg = document.getElementById("msg");
+
+        if (!usuario || !senha) {
+            msg.style.color = "red";
+            msg.innerText = "Preencha todos os campos!";
+            return;
+        }
+
+        try {
+            const response = await fetch("/usuarios", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + token
+            },
+            body: JSON.stringify({ username: usuario, password: senha, role: role }),
+            });
+
+            if (response.ok) {
+                msg.style.color = "green";
+                msg.innerText = "Usuário cadastrado com sucesso!";
+                document.getElementById("usuario").value = "";
+                document.getElementById("senha").value = "";
+            } else {
+                const error = await response.json();
+                msg.style.color = "red";
+                msg.innerText = error.detail || "Erro ao cadastrar!";
+            }
+        } catch (err) {
+            msg.style.color = "red";
+            msg.innerText = "Erro de conexão com o servidor.";
+        }
+      }
+    </script>
+  </body>
+</html>

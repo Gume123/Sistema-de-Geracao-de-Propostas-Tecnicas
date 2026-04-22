@@ -32,6 +32,35 @@
       .header {
         text-align: center;
         margin-bottom: 40px;
+        position: relative;
+      }
+
+      .actions {
+        position: absolute;
+        top: -10px;
+        right: 0;
+        display: flex;
+        gap: 10px;
+      }
+
+      .btn-action {
+        background: white;
+        color: #333;
+        border: 1px solid #d1d5db;
+        padding: 8px 14px;
+        font-size: 13px;
+        font-weight: 600;
+        border-radius: 8px;
+        cursor: pointer;
+        width: auto;
+        margin-top: 0;
+        transition: all 0.2s;
+      }
+
+      .btn-action:hover {
+        background: #f8fafc;
+        border-color: #ff008c;
+        color: #ff008c;
       }
 
       .header h1 {
@@ -121,6 +150,10 @@
   <body>
     <div class="container">
       <div class="header">
+        <div class="actions">
+           <button class="btn-action" onclick="window.location.href='usuarios.html'">+ Novo Usuário</button>
+           <button class="btn-action" onclick="logout()">Sair</button>
+        </div>
         <h1>Só Hélices</h1>
         <p>Sistema de Geração de Propostas Técnicas</p>
       </div>
@@ -176,8 +209,8 @@
             </div>
 
             <div class="field">
-              <label>Espaçamento (mm)</label>
-              <input type="text" id="espacamento" placeholder="30" />
+            <label>Espaçamento (mm)</label>
+            <input type="text" id="espacamento" placeholder="30" />
             </div>
 
             <div class="field">
@@ -279,29 +312,54 @@
         const select = document.getElementById("selectTemplate");
 
         try {
-          const response = await fetch("http://127.0.0.1:8000/templates", {
+          const response = await fetch("/templates", {
             headers: {
               Authorization: "Bearer " + localStorage.getItem("token"),
             },
           });
+
+          if (response.status === 401) {
+            localStorage.removeItem("token"); // limpa token inválido
+            window.location.href = "/login.html";
+            return;
+          }
 
           const templates = await response.json();
 
           select.innerHTML = "";
 
           const nomesTemplates = {
+            "template_Cowles.pptx": "Disco Cowles",
+            "template_Centrifugal.pptx": "Centrifugal",
+            "template_Defloculadora.pptx": "Defloculadora",
+            "template_uAlph-ARA.pptx": "uAlph-ARA",
+            "template_uAlph.pptx": "uAlph",
+            "template_Centrifuga.pptx": "Centrifuga",
+            "template_Naval-N.pptx": "Naval",
+            "template_Pitchblade.pptx": "Pitchblade",
+            "template_Blend-Mix.pptx": "Blend-Mix",
+            "template_Helicoidal-S.pptx": "Helicoidal-S",
+            "template_Gemini-V.pptx": "Gemini - V",
+            "template_Rushton_Converter.pptx": "Rushton Converter",
+            "template_Rush-T.pptx": "Rushton T",
+            "template_Rushton_AeroCurve.pptx": "Rushton AeroCurve",
+            "template_Rushton_C-Blade.pptx": "Rushton C-Blade",
+            "template_ARA-D.pptx": "ARA-D",
             "template_ANC-G.pptx": "ANC-G",
             "template_ANC-N.pptx": "ANC-N",
             "template_anc-u.pptx": "ANC-U",
             "template_ANC-T.pptx": "ANC-T",
             "template_ARA-S.pptx": "ARA-S",
-            "template_Blend-Mix.pptx": "Blend-Mix",
-            "template_Centrifugal.pptx": "Centrifugal",
-            "template_Defloculadora.pptx": "Defloculadora",
-            "template_Helicoidal-S.pptx": "Helicoidal-S",
-            "template_Naval-N.pptx": "Naval-N",
-            "template_Pitchblade.pptx": "Pitchblade",
-            "template_Cowles.pptx": "Disco Cowles",
+            "template_Cowles_Delta.pptx": "Disco Cowles Delta",
+            "template_Kit_Robb-S_Lab.pptx": "Kit Robb-S Lab",
+            "template_Ki_Helicoidal_Lab.pptx": "Kit Helicoidal Lab",
+            "template_Robb-S.pptx": "Robb-S",
+            "template_Kit_Gemin-V_Lab.pptx": "Kit Gemini-V Lab",
+            "template_Kit_ARA-S_Lab.pptx": "Kit ARA-S Lab",
+            "template_Cowles_OB.pptx": "Cowles OB",
+            "template_Kit_Cowles_Delta_Lab.pptx": "Kit Cowles Delta Lab",
+            "template_Kit_Cevin_Lab.pptx": "Kit Cevin Lab",
+            "template_Kit_Cowles_Lab.pptx": "Kit Cowles Lab",
           };
 
           templates.forEach((nome) => {
@@ -368,7 +426,7 @@
             }
 
             const response = await fetch(
-              `http://127.0.0.1:8000/gerar-proposta?template_nome=${templateEscolhido}`,
+              `/gerar-proposta?template_nome=${templateEscolhido}`,
               {
                 method: "POST",
                 headers: {
@@ -400,6 +458,11 @@
           btn.innerText = "Gerar Apresentação PowerPoint";
           btn.disabled = false;
         });
+
+      function logout() {
+          localStorage.removeItem("token");
+          window.location.href = "login.html";
+      }
     </script>
   </body>
 </html>

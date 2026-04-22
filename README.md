@@ -165,7 +165,7 @@ pip install fastapi uvicorn python-pptx pydantic python-jose passlib[bcrypt] pyt
 ## 4️⃣ Executar o servidor
 
 ```bash
-python run.py
+python -m uvicorn main:app --reload
 ```
 
 A aplicação estará disponível em:
