@@ -312,7 +312,7 @@
         const select = document.getElementById("selectTemplate");
 
         try {
-          const response = await fetch("/templates", {
+          const response = await fetch("http://127.0.0.1:8000/templates", {
             headers: {
               Authorization: "Bearer " + localStorage.getItem("token"),
             },
@@ -426,7 +426,7 @@
             }
 
             const response = await fetch(
-              `/gerar-proposta?template_nome=${templateEscolhido}`,
+              `http://127.0.0.1:8000/gerar-proposta?template_nome=${templateEscolhido}`,
               {
                 method: "POST",
                 headers: {
