@@ -29,12 +29,15 @@ Este projeto foi criado para **uso interno da Só Hélices**, com o objetivo de 
 
 # 🚀 Principais Funcionalidades
 
-✔ Login com autenticação JWT
+✔ Login com autenticação JWT e Banco de Dados
+✔ Sistema de cadastro e controle de usuários
 ✔ Interface web simples para preenchimento de dados
 ✔ Seleção dinâmica de templates PowerPoint
 ✔ Substituição automática de variáveis no template
 ✔ Download automático do arquivo gerado
 ✔ Remoção automática de arquivos temporários
+✔ **Deploy automatizado na nuvem (Render)**
+✔ **Banco de dados Híbrido (SQLite local / PostgreSQL produção)**
 
 ---
 
@@ -44,9 +47,10 @@ Este projeto foi criado para **uso interno da Só Hélices**, com o objetivo de 
 
 - Python
 - FastAPI
+- SQLAlchemy & PostgreSQL/SQLite (Banco de Dados)
 - python-pptx
 - Uvicorn
-- JWT (python-jose)
+- JWT (python-jose) & Passlib (Bcrypt)
 - Pydantic
 
 ### Frontend
@@ -60,21 +64,23 @@ Este projeto foi criado para **uso interno da Só Hélices**, com o objetivo de 
 - API REST
 - Autenticação stateless via JWT
 - Geração dinâmica de arquivos
+- Deploy contínuo no **Render**
 
 ---
 
 # 🏗️ Arquitetura do Sistema
 
-O sistema segue uma arquitetura simples baseada em **API REST + Frontend estático**.
+O sistema integra o **Frontend** e a **API** em um servidor unificado, utilizando banco de dados para segurança e persistência:
 
 ```
 Frontend (HTML / JS)
         │
-        ▼
-FastAPI Backend
+        ▼ (Requisições Relativas)
+FastAPI Backend (app.main)
         │
-        ├── Autenticação JWT
+        ├── Autenticação JWT ◄── Banco de Dados (PostgreSQL / SQLite)
         ├── Listagem de Templates
+        ├── Gerenciamento de Usuários
         └── Geração de Propostas
                 │
                 ▼
@@ -84,14 +90,6 @@ FastAPI Backend
         Arquivo PowerPoint gerado
 ```
 
-Fluxo principal:
-
-1. Usuário realiza login
-2. Recebe token JWT
-3. Interface envia requisições autenticadas
-4. Backend processa template PPTX
-5. Sistema retorna o arquivo gerado
-
 ---
 
 # 📂 Estrutura do Projeto
@@ -99,42 +97,39 @@ Fluxo principal:
 ```
 gerador-propostas/
 │
-├── app
-│   ├── main.py
-│   ├── auth.py
-│   ├── models.py
-│   ├── ppt_generator.py
-│   └── config.py
+├── app/
+│   ├── main.py          # Ponto de entrada (Backend + Frontend Estático)
+│   ├── auth.py          # Lógica de login e JWT
+│   ├── models.py        # Modelos do Banco de Dados
+│   ├── database.py      # Conexão com SQLite / PostgreSQL
+│   ├── crypt.py         # Hashes de senha
+│   ├── ppt_generator.py # Substituição de variáveis no PPTX
+│   └── config.py        # Variáveis de ambiente
 │
-├── frontend
-│   ├── login.html
-│   └── index.html
+├── frontend/
+│   ├── index.html       # Painel Principal
+│   ├── login.html       # Tela de Login
+│   └── usuarios.html    # Tela de Criação de Usuários
 │
-├── templates
+├── templates/
 │   └── modelos_de_proposta.pptx
 │
-├── temp
-│   └── arquivos_gerados
+├── temp/
+│   └── (Arquivos gerados temporariamente)
 │
-├── docs
-│   ├── login.png
-│   └── interface.png
-│
-├── requirements.txt
+├── requirements.txt     # Dependências do projeto
+├── .env                 # Variáveis de ambiente (Local)
 └── README.md
 ```
 
 ---
 
-# ⚙️ Instalação e Execução
+# ⚙️ Instalação e Execução (Local)
 
 ## 1️⃣ Clonar o repositório
 
 ```bash
 git clone https://github.com/Gume123/Sistema-de-Geracao-de-Propostas-Tecnicas
-```
-
-```bash
 cd gerador-propostas
 ```
 
@@ -157,7 +152,7 @@ venv\Scripts\activate
 ## 3️⃣ Instalar dependências
 
 ```bash
-pip install fastapi uvicorn python-pptx pydantic python-jose passlib[bcrypt] python-multipart
+pip install -r requirements.txt
 ```
 
 ---
@@ -165,33 +160,34 @@ pip install fastapi uvicorn python-pptx pydantic python-jose passlib[bcrypt] pyt
 ## 4️⃣ Executar o servidor
 
 ```bash
-python -m uvicorn main:app --reload
+uvicorn app.main:app --reload
 ```
 
 A aplicação estará disponível em:
 
 ```
-http://127.0.0.1:8000/login.html
+http://127.0.0.1:8000/
 ```
 
 ---
 
-# 🔐 Autenticação
+# ☁️ Deploy no Render
 
-O sistema utiliza **JSON Web Token (JWT)** para autenticação.
+O projeto está configurado para deploy imediato no **Render**.
 
-Fluxo:
+1. Crie um **Web Service** com ambiente `Python 3`.
+2. **Build Command:** `pip install -r requirements.txt`
+3. **Start Command:** `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
+4. Crie um **Banco de Dados PostgreSQL** no Render e adicione a "Internal Database URL" como a variável de ambiente `DATABASE_URL` no seu Web Service.
+5. Configure as demais variáveis (`SECRET_KEY`, `USUARIO`, `SENHA`, etc.).
 
-1. Usuário envia credenciais para `/login`
-2. Backend retorna um token
-3. Token é armazenado no `localStorage`
-4. Requisições subsequentes incluem o token no header
+---
 
-Exemplo de header:
+# 🔐 Autenticação e Usuários
 
-```
-Authorization: Bearer <token>
-```
+O sistema utiliza **JSON Web Token (JWT)** e **Senhas Hashadas (Bcrypt)**.
+- O primeiro usuário Admin é criado automaticamente ao iniciar o banco de dados pela primeira vez com base nas credenciais do `.env`.
+- Novos usuários podem ser cadastrados via painel na rota `/usuarios.html` (apenas por usuários logados).
 
 ---
 
@@ -208,99 +204,22 @@ Os templates PowerPoint devem conter **placeholders** no formato:
 ```
 
 Durante a geração da proposta:
-
-1. O template é carregado
-2. O sistema percorre slides, caixas de texto e tabelas
-3. As variáveis são substituídas pelos valores do formulário
-
----
-
-# 📦 Geração de Arquivos
-
-Quando uma proposta é criada:
-
-1️⃣ Template é carregado
-2️⃣ Dados são inseridos no PPTX
-3️⃣ Arquivo é salvo temporariamente
-4️⃣ Arquivo é enviado para download
-5️⃣ Arquivo temporário é removido automaticamente
-
-Isso evita acúmulo de arquivos no servidor.
+1. O template é carregado da pasta `templates/`.
+2. O sistema percorre slides, caixas de texto e tabelas.
+3. As variáveis são substituídas pelos valores do formulário.
 
 ---
 
-# 🧠 Decisões Técnicas
+# 🔧 Possíveis Melhorias Futuras
 
-Algumas escolhas importantes no projeto:
-
-**FastAPI**
-
-Escolhido por oferecer:
-
-- alta performance
-- tipagem forte com Pydantic
-- documentação automática
-- desenvolvimento rápido
-
----
-
-**python-pptx**
-
-Permite manipular apresentações PowerPoint programaticamente:
-
-- editar textos
-- percorrer tabelas
-- substituir placeholders
-
----
-
-**JWT Authentication**
-
-Escolhido por:
-
-- evitar sessões no servidor
-- simplificar deploy
-- permitir integração futura com APIs
-
----
-
-# 🔧 Possíveis Melhorias
-
-- autenticação com banco de dados
-- controle de usuários
-- histórico de propostas geradas
-- upload de templates pela interface
-- exportação em PDF
-- deploy em cloud (AWS / Railway / Render)
-- geração automática de número de proposta
-
----
-
-# 📈 Roadmap
-
-Versões futuras planejadas:
-
-**v1.1**
-
-- logout
-- expiração de sessão
-- proteção completa das rotas frontend
-
-**v1.2**
-
-- sistema de usuários
-- banco de dados
-
-**v2.0**
-
-- dashboard administrativo
-- upload de templates
-- geração de PDF
+- Histórico de propostas geradas (salvar no banco de dados)
+- Upload de novos templates diretamente pela interface web
+- Exportação dos arquivos em PDF
+- Geração automática sequencial de número de proposta
 
 ---
 
 # 📜 Licença
 
 Projeto desenvolvido para uso interno da **Só Hélices**.
-
 Uso externo requer autorização.
