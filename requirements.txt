@@ -1,1 +1,11 @@
-fastapi uvicorn python-pptx pydantic python-jose passlib[bcrypt] "bcrypt<4.1.0" python-multipart python-dotenv sqlalchemy psycopg2-binary
+fastapi
+uvicorn
+python-pptx
+pydantic
+python-jose
+passlib[bcrypt]
+bcrypt<4.1.0
+python-multipart
+python-dotenv
+sqlalchemy
+psycopg2-binary
