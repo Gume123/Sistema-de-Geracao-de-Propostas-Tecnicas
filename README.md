@@ -29,15 +29,15 @@ Este projeto foi criado para **uso interno da Só Hélices**, com o objetivo de 
 
 # 🚀 Principais Funcionalidades
 
-✔ Login com autenticação JWT e Banco de Dados
-✔ Sistema de cadastro e controle de usuários
-✔ Interface web simples para preenchimento de dados
-✔ Seleção dinâmica de templates PowerPoint
-✔ Substituição automática de variáveis no template
-✔ Download automático do arquivo gerado
-✔ Remoção automática de arquivos temporários
-✔ **Deploy automatizado na nuvem (Render)**
-✔ **Banco de dados Híbrido (SQLite local / PostgreSQL produção)**
+✔ Login com autenticação JWT e Banco de Dados <br />
+✔ Sistema de cadastro e controle de usuários <br />
+✔ Interface web simples para preenchimento de dados <br />
+✔ Seleção dinâmica de templates PowerPoint <br />
+✔ Substituição automática de variáveis no template <br />
+✔ Download automático do arquivo gerado <br />
+✔ Remoção automática de arquivos temporários <br />
+✔ **Deploy automatizado na nuvem (Render)** <br />
+✔ **Banco de dados Híbrido (SQLite local / PostgreSQL produção)** <br />
 
 ---
 
