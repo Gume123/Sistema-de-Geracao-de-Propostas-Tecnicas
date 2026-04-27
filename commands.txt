@@ -1,2 +1,5 @@
 Iniciar Backend:
 python -m uvicorn app.main:app --reload
+
+comando para o render:
+uvicorn app.main:app --host 0.0.0.0 --port $PORT
