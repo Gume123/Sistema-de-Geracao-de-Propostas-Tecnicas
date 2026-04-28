@@ -326,7 +326,7 @@
 
           const templates = await response.json();
 
-          select.innerHTML = "";
+          select.innerHTML = '<option value="" disabled selected>Selecione um modelo...</option>';
 
           const nomesTemplates = {
             "template_Cowles.pptx": "Disco Cowles",
@@ -375,16 +375,29 @@
             "template_Supra.pptx": "Supra"
           };
 
+          const optgroupKits = document.createElement("optgroup");
+          optgroupKits.label = "Kits";
+
+          const optgroupDemais = document.createElement("optgroup");
+          optgroupDemais.label = "Demais";
+
           templates.forEach((nome) => {
             const option = document.createElement("option");
 
             option.value = nome;
 
-            option.innerText =
-              nomesTemplates[nome] || nome.replace(".pptx", "");
+            const nomeExibicao = nomesTemplates[nome] || nome.replace(".pptx", "");
+            option.innerText = nomeExibicao;
 
-            select.appendChild(option);
+            if (nomeExibicao.toLowerCase().includes("kit")) {
+              optgroupKits.appendChild(option);
+            } else {
+              optgroupDemais.appendChild(option);
+            }
           });
+
+          if (optgroupDemais.children.length > 0) select.appendChild(optgroupDemais);
+          if (optgroupKits.children.length > 0) select.appendChild(optgroupKits);
         } catch (err) {
           select.innerHTML = "<option>Erro ao carregar modelos</option>";
         }
