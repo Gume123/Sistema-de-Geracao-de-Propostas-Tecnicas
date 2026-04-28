@@ -116,7 +116,7 @@ async def gerar_proposta(
 
     background_tasks.add_task(remover_arquivo, caminho_saida)
 
-    return FileResponse(caminho_saida, filename=f"Proposta_{dados.proposta}.pptx")
+    return FileResponse(caminho_saida, filename=f"{dados.proposta} - {dados.nome_cliente} - {dados.nome_vendedor}.pptx")
 
 # Montar o frontend para ser servido pelo próprio Uvicorn na raiz ("/")
 frontend_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "frontend")

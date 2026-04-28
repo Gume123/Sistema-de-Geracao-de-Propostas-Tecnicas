@@ -25,6 +25,7 @@ class PropostaData(BaseModel):
     data: str = ""
     nome_vendedor: str = ""
     email_vendedor: str = ""
+    nome_cliente: str = ""
 
 from sqlalchemy import Column, Integer, String, Boolean
 from .database import Base
