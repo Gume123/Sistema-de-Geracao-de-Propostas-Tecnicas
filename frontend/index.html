@@ -198,11 +198,6 @@
 
           <div class="grid">
             <div class="field">
-              <label>Aleta (mm)</label>
-              <input type="text" id="aleta" placeholder="300" />
-            </div>
-
-            <div class="field">
               <label>Diâmetro da Aleta (mm)</label>
               <input type="text" id="diametro_aleta" placeholder="600" />
             </div>
@@ -249,8 +244,8 @@
             </div>
 
             <div class="field">
-              <label>Preço do Lote</label>
-              <input type="text" id="preco_lote" placeholder="2000,00" />
+              <label>Tamanho do lote</label>
+              <input type="text" id="preco_lote" placeholder="4" />
             </div>
 
             <div class="field">
@@ -419,7 +414,6 @@
 
           const campos = [
             "proposta",
-            "aleta",
             "diametro_aleta",
             "espacamento",
             "diametro_corpo",
@@ -442,8 +436,23 @@
 
           campos.forEach((id) => {
             const el = document.getElementById(id);
-            dados[id] = el.value || "-";
+            if (el) {
+              dados[id] = el.value || "-";
+            }
           });
+
+          dados["aleta"] = dados["diametro_aleta"];
+          
+          // Calcula o valor total do lote e formata a string: "Quantidade (R$ Total)"
+          let precoFormatado = dados["preco_unitario"] !== "-" ? String(dados["preco_unitario"]).replace(/\./g, "").replace(",", ".") : "0";
+          let precoFloat = parseFloat(precoFormatado) || 0;
+          let qtdLote = parseInt(dados["preco_lote"]) || 0;
+          
+          if (qtdLote > 0 && precoFloat > 0) {
+            let totalLote = precoFloat * qtdLote;
+            let totalLoteFormatado = totalLote.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+            dados["preco_lote"] = `${dados["preco_lote"]} (${totalLoteFormatado})`;
+          }
 
           try {
             const templateEscolhido =
