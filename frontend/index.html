@@ -451,7 +451,7 @@
           if (qtdLote > 0 && precoFloat > 0) {
             let totalLote = precoFloat * qtdLote;
             let totalLoteFormatado = totalLote.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
-            dados["preco_lote"] = `${dados["preco_lote"]} (${totalLoteFormatado})`;
+            dados["preco_lote"] = `${totalLoteFormatado} (${dados["preco_lote"]} unidades)`;
           }
 
           try {
