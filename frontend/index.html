@@ -444,7 +444,8 @@
           dados["aleta"] = dados["diametro_aleta"];
           
           // Calcula o valor total do lote e formata a string: "Quantidade (R$ Total)"
-          let precoFormatado = dados["preco_unitario"] !== "-" ? String(dados["preco_unitario"]).replace(/\./g, "").replace(",", ".") : "0";
+          let precoLimpo = String(dados["preco_unitario"]).replace(/[^\d,.-]/g, ""); // Remove 'R$', letras e espaços
+          let precoFormatado = precoLimpo !== "" && precoLimpo !== "-" ? precoLimpo.replace(/\./g, "").replace(",", ".") : "0";
           let precoFloat = parseFloat(precoFormatado) || 0;
           let qtdLote = parseInt(dados["preco_lote"]) || 0;
           
