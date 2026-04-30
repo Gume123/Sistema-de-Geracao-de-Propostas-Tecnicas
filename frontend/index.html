@@ -451,7 +451,7 @@
           
           if (qtdLote > 0 && precoFloat > 0) {
             let totalLote = precoFloat * qtdLote;
-            let totalLoteFormatado = totalLote.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+            let totalLoteFormatado = totalLote.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             dados["preco_lote"] = `${totalLoteFormatado} (${dados["preco_lote"]} unidades)`;
           }
 
@@ -484,7 +484,7 @@
 
               const a = document.createElement("a");
               a.href = url;
-              a.download = `Proposta_SoHelices_${dados.proposta}.pptx`;
+              a.download = `${dados.proposta} - ${dados.nome_cliente} - ${dados.nome_vendedor}.pptx`;
 
               document.body.appendChild(a);
               a.click();
